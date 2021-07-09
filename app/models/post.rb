@@ -3,7 +3,15 @@ class Post < ActiveRecord::Base
     validates :content, length: { minimum: 250 }
     validates :summary, length: { maximum: 250 }
     validates :category, inclusion: { in: %w(Fiction Non-Fiction)}
-    validate :clickbait?
+    validates_with TitleValidator
+    
+
+    # def clickbait?
+    #     if self.title.inclusion?{ in: %w('Won't Believe' Secret Guess)}
+    #         errors.add(:title, "click baited")
+    #     end
+    # end
+
 
 
     # def clickbait?
@@ -28,17 +36,17 @@ class Post < ActiveRecord::Base
     # end
 
 
-    CUSTOM = [
-        "Won't Believe",
-        "Secret",
-        "Top[number]",
-        "Guess"
-    ]
+    # CUSTOM = [
+    #     "Won't Believe",
+    #     "Secret",
+    #     "Top[number]",
+    #     "Guess"
+    # ]
     
-    def clickbait?
-         if title.present? && CUSTOM.none? { |p| title.match(p)}
-            errors.add(:title, "clickbait-y... enough?")
-        end
-    end
+    # def clickbait?
+    #      if title.present? && CUSTOM.none? { |p| title.match(p)}
+    #         errors.add(:title, "clickbait-y... enough?")
+    #     end
+    # end
 
 end
